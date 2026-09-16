@@ -1,0 +1,133 @@
+.sobre {
+  padding: 80px 60px;
+  text-align: center;
+}
+
+.sobre-tagline {
+  color: var(--color-primary);
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+}
+
+.sobre-title {
+  color: var(--color-text-strong);
+  font-size: 2.2rem;
+  margin: 8px 0 32px;
+}
+
+.sobre-card {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  text-align: left;
+  background-color: var(--color-bg-alt);
+  border: 1px solid var(--color-primary);
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 0 30px rgba(108, 124, 255, 0.15);
+  margin-bottom: 32px;
+}
+
+.sobre-perfil {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 140px;
+}
+
+.sobre-perfil img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid var(--color-primary);
+  margin-bottom: 12px;
+}
+
+.sobre-perfil h3 {
+  color: var(--color-text-strong);
+  font-size: 1rem;
+}
+
+.sobre-cargo {
+  color: var(--color-primary);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  margin-bottom: 8px;
+}
+
+.sobre-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  color: var(--color-text);
+}
+
+.sobre-status-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #22c55e;
+  border-radius: 50%;
+}
+
+.sobre-texto {
+  color: var(--color-text);
+  line-height: 1.7;
+}
+
+.destaque-react {
+  color: #61dafb;
+}
+
+.destaque-node {
+  color: #3c873a;
+}
+
+.sobre-info-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+}
+
+.sobre-info-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 24px 16px;
+  background-color: var(--color-bg-alt);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+}
+
+.sobre-info-icone {
+  font-size: 1.4rem;
+}
+
+.sobre-info-numero {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: var(--color-primary);
+}
+
+.sobre-info-card strong {
+  color: var(--color-text-strong);
+  font-size: 0.9rem;
+}
+
+.sobre-info-legenda {
+  color: var(--color-text);
+  font-size: 0.75rem;
+}
+
+@media (max-width: 768px) {
+  .sobre-card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .sobre-info-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

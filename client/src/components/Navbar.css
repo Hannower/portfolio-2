@@ -5,6 +5,17 @@
   padding: 20px 60px;
   background-color: #0a0e17;
   border-bottom: 1px solid #1f2430;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  transition: background-color 0.3s, backdrop-filter 0.3s;
+}
+
+.navbar-rolado {
+  background-color: rgba(10, 14, 23, 0.7);
+  backdrop-filter: blur(8px);
 }
 
 .navbar-logo {
