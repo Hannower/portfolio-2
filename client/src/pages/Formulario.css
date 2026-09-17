@@ -1,0 +1,214 @@
+.formulario-page {
+    min-height: 100vh;
+}
+
+.formulario-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 60px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.formulario-header-titulo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--color-primary);
+    font-weight: bold;
+}
+
+.formulario-voltar-icon {
+    color: var(--color-text);
+    text-decoration: none;
+    font-size: 1.1rem;
+}
+
+.formulario-badge {
+    background-color: rgba(108, 124, 255, 0.15);
+    color: var(--color-primary);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: normal;
+    padding: 3px 10px;
+    border-radius: 20px;
+}
+
+.formulario-header-acoes {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.formulario-voltar-lista {
+    color: var(--color-text);
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.formulario-btn-sair {
+    background: none;
+    border: none;
+    color: var(--color-text);
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: 0.3s;
+}
+
+.formulario-btn-sair:hover {
+    color: #902c2c;
+}
+
+.formulario-conteudo {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 50px 24px 80px;
+}
+
+.formulario-tagline {
+    color: var(--color-primary-alt);
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+}
+
+.formulario-conteudo h1 {
+    color: var(--color-text-strong);
+    font-size: 2rem;
+    margin: 8px 0 32px;
+}
+
+.formulario-conteudo form {
+    display: flex;
+    flex-direction: column;
+}
+
+.formulario-conteudo label {
+    color: var(--color-primary);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    margin-bottom: 10px;
+}
+
+.formulario-conteudo input,
+.formulario-conteudo textarea {
+    width: 100%;
+    padding: 14px 16px;
+    background-color: var(--color-bg-alt);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    color: var(--color-text-strong);
+    font-family: var(--font-base);
+    font-size: 0.95rem;
+    margin-bottom: 24px;
+}
+
+.formulario-conteudo textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.formulario-conteudo input::placeholder,
+.formulario-conteudo textarea::placeholder {
+    color: var(--color-text);
+}
+
+.formulario-conteudo input:focus,
+.formulario-conteudo textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.formulario-dica {
+    color: var(--color-text);
+    font-size: 0.8rem;
+    margin-top: -16px;
+    margin-bottom: 24px;
+}
+
+.formulario-linha {
+    display: flex;
+    gap: 20px;
+}
+
+.formulario-campo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.formulario-toggle {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 32px;
+    color: var(--color-text-strong);
+    font-size: 0.95rem;
+}
+
+.formulario-switch {
+    width: 44px;
+    height: 24px;
+    border-radius: 20px;
+    background-color: var(--color-border);
+    border: none;
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.3s;
+}
+
+.formulario-switch.ativo {
+    background: linear-gradient(90deg, var(--color-primary), var(--color-primary-alt));
+}
+
+.formulario-switch-bola {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 18px;
+    height: 18px;
+    background-color: #fff;
+    border-radius: 50%;
+    transition: left 0.3s;
+}
+
+.formulario-switch.ativo .formulario-switch-bola {
+    left: 23px;
+}
+
+.formulario-acoes {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.formulario-btn-adicionar {
+    background: linear-gradient(90deg, var(--color-primary), var(--color-primary-alt));
+    color: #fff;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.formulario-btn-adicionar:hover {
+    box-shadow: 0 0 20px var(--color-primary);
+}
+
+.formulario-btn-cancelar {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-size: 0.95rem;
+}
+
+@media (max-width: 768px) {
+    .formulario-header {
+        padding: 16px 24px;
+    }
+
+    .formulario-linha {
+        flex-direction: column;
+        gap: 0;
+    }
+}
