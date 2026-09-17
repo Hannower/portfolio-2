@@ -44,7 +44,7 @@ export default function Projetos() {
         : projetosMock.filter((p) => p.tags.includes(filtro));
 
     return (
-        <section className="projetos">
+        <section className="projetos" id="projetos">
             <span className="projetos-tagline">// projetos</span>
             <div className="projetos-header">
                 <h2 className="projetos-title">O que eu construí</h2>

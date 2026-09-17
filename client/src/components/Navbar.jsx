@@ -17,7 +17,7 @@ export default function Navbar() {
 
       <ul className={`navbar-menu ${menuAberto ? 'aberto' : ''}`}>
         <li><a href="#" onClick={() => setMenuAberto(false)}>Inicio</a></li>
-        <li><a href="#habilidades" onClick={() => setMenuAberto(false)}>Habilidades</a></li>
+        <li><a href="#skills" onClick={() => setMenuAberto(false)}>Habilidades</a></li>
         <li><a href="#projetos" onClick={() => setMenuAberto(false)}>Projetos</a></li>
         <li><a href="#sobre" onClick={() => setMenuAberto(false)}>Sobre</a></li>
         <li><a href="#contato" onClick={() => setMenuAberto(false)}>Contato</a></li>

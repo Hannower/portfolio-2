@@ -11,14 +11,14 @@ const infoCards = [
 
 export default function Sobre() {
     return (
-        <section className="sobre">
+        <section className="sobre" id="sobre">
             <span className="sobre-tagline">// sobre mim</span>
             <h2 className="sobre-title">Quem está por trás do código</h2>
 
             <div className="sobre-card">
                 <div className="sobre-perfil">
                     <img src={foto} alt="Foto do desenvolvedor" />
-                    <h3>Seu Nome</h3>
+                    <h3>Hannower Monteiro</h3>
                     <span className="sobre-cargo">Full Stack Dev</span>
                     <span className="sobre-status">
                         <span className="sobre-status-dot"></span> disponível

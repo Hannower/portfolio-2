@@ -1,17 +1,17 @@
 import './Footer.css';
-import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaEnvelope, FaWhatsapp } from 'react-icons/fa';
 
-const navegacao = ['Início', 'Projetos', 'Habilidades', 'Sobre', 'Contato'];
-const stack = ['React', 'Node.js', 'TypeScript', 'PostgreSQL', 'REST API'];
+const navegacao = ['Início', 'Habilidades', 'Projetos', 'Sobre', 'Contato'];
+const stack = ['React', 'Node.js', 'JavaScript', 'PostgreSQL', 'REST API'];
 
 export default function Footer() {
   return (
-    <footer className="footer">
+    <footer className="footer" id='footer'>
       <div className="footer-grid">
         <div className="footer-sobre">
           <span className="footer-logo">&lt;DevPortfolio /&gt;</span>
           <p>
-            Desenvolvedor Full-Stack apaixonado por transformar
+            Desenvolvedor Full-Stack apaixonado por 
             transformar ideias em produtos digitais
             funcionais e bem escritos.
           </p>
@@ -19,6 +19,8 @@ export default function Footer() {
             <a href="https://github.com/Hannower" target="_blank" rel="noreferrer"><FaGithub /></a>
             <a href="https://linkedin.com/in/hannower-monteiro" target="_blank" rel="noreferrer"><FaLinkedin /></a>
             <a href="mailto:hannowersousa@gmail.com"><FaEnvelope /></a>
+            <a href="https://wa.me/5585985386977" target="_blank" rel="noreferrer"><FaWhatsapp /></a>
+
           </div>
         </div>
 

@@ -41,7 +41,7 @@
 }
 
 .navbar-menu a:hover {
-  color: #ffffff;
+  color: #6c7cff;
 }
 
 .navbar-hamburguer {
@@ -78,6 +78,10 @@
 @media (max-width: 768px) {
   .navbar-hamburguer {
     display: flex;
+  }
+
+  .navbar-logo {
+    font-size: 1rem;
   }
 
   .navbar-menu {

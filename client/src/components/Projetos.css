@@ -136,3 +136,19 @@
   color: var(--color-text);
   text-decoration: none;
 }
+
+@media (max-width: 768px) {
+  .projetos {
+    padding: 60px 24px;
+  }
+
+  .projetos-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .projetos-grid {
+    grid-template-columns: 1fr;
+  }
+}

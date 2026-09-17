@@ -13,10 +13,9 @@ const tags = [
 
 export default function Skills() {
   return (
-    <section className="skills">
+    <section className="skills" id='skills'>
       <span className="skills-tagline">// skills</span>
       <h2 className="skills-title">Habilidades</h2>
-
       <div className="skills-list">
         {tags.map((tag) => (
           <span key={tag.name} className="skills-tag">

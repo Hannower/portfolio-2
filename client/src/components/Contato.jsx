@@ -10,7 +10,7 @@ const contatos = [
 
 export default function Contato() {
     return (
-        <section className="contato">
+        <section className="contato" id='contato'>
             <span className="contato-tagline">// contato</span>
             <h2 className="contato-title">Vamos conversar?</h2>
             <p className="contato-texto">
