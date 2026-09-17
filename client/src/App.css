@@ -1,0 +1,28 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --color-bg: #0a0e17;
+  --color-bg-alt: #1a1f2e;
+  --color-border: #1f2430;
+  --color-text: #878a90;
+  --color-text-strong: #ffffff;
+  --color-primary: #6c7cff;
+  --color-primary-alt: #a855f7;
+
+  --font-base: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-base);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
