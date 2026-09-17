@@ -48,7 +48,7 @@
 .projetos-filtro.ativo {
   border-color: var(--color-primary);
   color: var(--color-primary);
-  background-color: rgba(108, 124, 255, 0.1);
+  background-color: #6c7cff1a;
 }
 
 .projetos-grid {
