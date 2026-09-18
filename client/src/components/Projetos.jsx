@@ -47,8 +47,12 @@ export default function Projetos() {
         <section className="projetos" id="projetos">
             <span className="projetos-tagline">// projetos</span>
             <div className="projetos-header">
-                <h2 className="projetos-title">O que eu construí</h2>
-                <span className="projetos-count">{projetosFiltrados.length} projetos</span>
+                <div className="projetos-title">
+                    <h2 >O que eu construí</h2>  
+                </div>
+                <div className="projetos-count">
+                    <span >{projetosFiltrados.length} projetos</span>
+                </div>
             </div>
 
             <div className="projetos-filtros">
