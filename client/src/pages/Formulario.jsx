@@ -56,7 +56,7 @@ export default function Formulario() {
 
                     <div className="formulario-linha">
                         <div className="formulario-campo">
-                            <label htmlFor="demo">link demo</label>
+                            <label htmlFor="demo">link demo *</label>
                             <input type="text" id="demo" placeholder="https://..." />
                         </div>
 
