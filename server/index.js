@@ -1,19 +1,24 @@
 import express from 'express';
 import 'dotenv/config';
 import mongoose from 'mongoose';
+import projetosRoutes from './routes/projetos.js';
+import Projeto from './models/Projeto.js';
+import cors from 'cors';
 
 const app = express();
 const porta = 3000;
 
-app.get('/', (req, res) => {
-    res.send('API funcionando...');
-})
+app.use(express.json())
+app.use(cors());
+app.use('/projetos', projetosRoutes);
+
+// app.get('/', (req, res) => {
+//     res.send('API funcionando...');
+// })
 
 app.listen(porta, () => {
     console.log(`Servidor rodando em http://localhost:${porta}`);
 })
-
-// console.log(process.env.MONGODB_URI);
 
 mongoose.connect(process.env.MONGODB_URI)
     .then(() => {

@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 
 const projetoSchema = new mongoose.Schema({
-    // campo: {type: String, required: true},
 
     titulo: {type: String, required: true},
     descricao: {type: String, required: true},
