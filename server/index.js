@@ -1,5 +1,5 @@
-import express from 'express';
 import 'dotenv/config';
+import express from 'express';
 import mongoose from 'mongoose';
 import projetosRoutes from './routes/projetos.js';
 import Projeto from './models/Projeto.js';
@@ -12,9 +12,14 @@ app.use(express.json())
 app.use(cors());
 app.use('/projetos', projetosRoutes);
 
-// app.get('/', (req, res) => {
-//     res.send('API funcionando...');
-// })
+app.get('/', (req, res) => {
+    res.send('API funcionando...');
+})
+
+app.use((erro, req, res, next) => {
+  console.log('ERRO DE MIDDLEWARE:', erro.message);
+  res.status(500).json({ mensagem: erro.message });
+});
 
 app.listen(porta, () => {
     console.log(`Servidor rodando em http://localhost:${porta}`);

@@ -1,37 +1,31 @@
 import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import './Admin.css';
 
-const projetosMock = [
-    {
-        id: 1,
-        titulo: 'E-Commerce Dashboard',
-        descricao: 'Dashboard completo para gerenciamento de loja virtual com gráficos de vendas, controle de estoque e gestão de pedidos e...',
-        imagem: '/projetos/dashboard.png',
-        tags: ['React', 'TypeScript', 'Tailwind', 'Recharts'],
-        destaque: true,
-    },
-    {
-        id: 2,
-        titulo: 'API REST Node.js',
-        descricao: 'API completa com autenticação JWT, CRUD de usuários, upload de arquivos e documentação Swagger integrada.',
-        imagem: '/projetos/api.png',
-        tags: ['Node.js', 'Express', 'PostgreSQL', 'JWT'],
-        destaque: true,
-    },
-    {
-        id: 3,
-        titulo: 'App de Tarefas',
-        descricao: 'Aplicativo de gerenciamento de tarefas com drag-and-drop, categorias, prioridades e sincronização em tempo real.',
-        imagem: '/projetos/tarefas.png',
-        tags: ['React', 'Firebase', 'Framer Motion'],
-        destaque: false,
-    },
-];
-
 export default function Admin() {
-    const handleExcluir = (id) => {
-        // lógica de exclusão virá aqui (chamada à API)
-        console.log('Excluir projeto', id);
+    const [projetos, setProjetos] = useState([]);
+
+    useEffect(() => {
+        fetch('http://localhost:3000/projetos')
+            .then(response => response.json())
+            .then(dados => setProjetos(dados));
+    }, [])
+
+    const handleExcluir = async (id) => {
+        const confirmacao = confirm('Confirma exclusão do projeto?');
+
+        if (!confirmacao) return;
+
+        try {
+            await fetch(`http://localhost:3000/projetos/${id}`, {
+                method: 'DELETE',
+            });
+
+            setProjetos(projetos.filter((p) => p._id !== id));
+
+        } catch (erro) {
+            alert('Erro ao excluir projeto');
+        }
     };
 
     return (
@@ -52,11 +46,11 @@ export default function Admin() {
             <main className="admin-conteudo">
                 <span className="admin-tagline">// dashboard</span>
                 <h1>Seus Projetos</h1>
-                <p className="admin-subtitulo">{projetosMock.length} projetos cadastrados</p>
+                <p className="admin-subtitulo">{projetos.length} projetos cadastrados</p>
 
                 <div className="admin-lista">
-                    {projetosMock.map((p) => (
-                        <div key={p.id} className="admin-card">
+                    {projetos.map((p) => (
+                        <div key={p._id} className="admin-card">
                             <img src={p.imagem} alt={p.titulo} className="admin-card-imagem" />
 
                             <div className="admin-card-info">
@@ -66,15 +60,15 @@ export default function Admin() {
                                 </div>
                                 <p>{p.descricao}</p>
                                 <div className="admin-card-tags">
-                                    {p.tags.map((tag) => (
+                                    {p.tecnologias.map((tag) => (
                                         <span key={tag} className="admin-card-tag">{tag}</span>
                                     ))}
                                 </div>
                             </div>
 
                             <div className="admin-card-acoes">
-                                <Link to={`/admin/editar/${p.id}`} className="admin-btn-editar">Editar</Link>
-                                <button className="admin-btn-excluir" onClick={() => handleExcluir(p.id)}>Excluir</button>
+                                <Link to={`/admin/editar/${p._id}`} className="admin-btn-editar">Editar</Link>
+                                <button className="admin-btn-excluir" onClick={() => handleExcluir(p._id)}>Excluir</button>
                             </div>
                         </div>
                     ))}
