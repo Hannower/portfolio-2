@@ -1,10 +1,11 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import './Formulario.css';
+import { useState, useEffect } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import './EditarForm.css';
 
-
-export default function Formulario() {
+export default function EditarForm() {
     const navigate = useNavigate();
+    const { id } = useParams();
+
     const [formulario, setFormulario] = useState({
         titulo: '',
         descricao: '',
@@ -13,43 +14,51 @@ export default function Formulario() {
         repositorio: '',
         tecnologias: '',
         destaque: false,
-    })
+    });
+
+    useEffect(() => {
+        fetch(`http://localhost:3000/projetos/${id}`)
+            .then(res => res.json())
+            .then(dados => {
+                setFormulario({
+                    ...dados,
+                    tecnologias: dados.tecnologias.join(', '),
+                });
+            });
+    }, [id]);
 
     const handleChange = (e) => {
-        const { name, type, value, files } = e.target;
-
-        setFormulario({
-            ...formulario,
-            [name]: type === 'file' ? files[0] : value
-        });
+        const { name, value } = e.target;
+        setFormulario({ ...formulario, [name]: value });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const dadosParaEnviar = new FormData();
+        const dadosPreenchidos = Object.fromEntries(
+            Object.entries(formulario).filter(([chave, valor]) => valor !== '')
+        );
 
-        dadosParaEnviar.append('titulo', formulario.titulo);
-        dadosParaEnviar.append('descricao', formulario.descricao);
-        dadosParaEnviar.append('imagem', formulario.imagem);
-        dadosParaEnviar.append('linkDemo', formulario.linkDemo);
-        dadosParaEnviar.append('repositorio', formulario.repositorio);
-        dadosParaEnviar.append('tecnologias', formulario.tecnologias);
-        dadosParaEnviar.append('destaque', formulario.destaque);
+        if (dadosPreenchidos.tecnologias) {
+            dadosPreenchidos.tecnologias = dadosPreenchidos.tecnologias
+                .split(',')
+                .map(t => t.trim());
+        }
 
         try {
-            const res = await fetch('http://localhost:3000/projetos', {
-                method: 'POST',
-                body: dadosParaEnviar,
+            const res = await fetch(`http://localhost:3000/projetos/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dadosPreenchidos),
             });
 
             if (res.ok) {
                 navigate('/admin/dashboard');
             } else {
-                alert('Erro ao cadastrar projeto');
+                alert('Erro ao atualizar projeto');
             }
         } catch (erro) {
-            alert('Erro de conexão:' + erro);
+            alert('Erro de conexão: ' + erro);
         }
     };
 
@@ -69,11 +78,11 @@ export default function Formulario() {
             </header>
 
             <main className="formulario-conteudo">
-                <span className="formulario-tagline">// novo projeto</span>
-                <h1>Adicionar Projeto</h1>
+                <span className="formulario-tagline">// editar projeto</span>
+                <h1>Editar Projeto</h1>
 
                 <form onSubmit={handleSubmit}>
-                    <label htmlFor="titulo">título do projeto *</label>
+                    <label htmlFor="titulo">título do projeto</label>
                     <input
                         type="text"
                         id="titulo"
@@ -81,33 +90,31 @@ export default function Formulario() {
                         placeholder="Ex: E-Commerce Dashboard"
                         value={formulario.titulo}
                         onChange={handleChange}
-                        required
                     />
 
-                    <label htmlFor="descricao">descrição *</label>
+                    <label htmlFor="descricao">descrição</label>
                     <textarea
                         id="descricao"
                         name="descricao"
                         placeholder="Descreva o que o projeto faz, tecnologias principais e desafios resolvidos..."
                         value={formulario.descricao}
                         onChange={handleChange}
-                        required
                     />
 
-                    <label htmlFor="imagem">imagem de capa *</label>
+                    <label htmlFor="imagem">url da imagem / gif</label>
                     <input
-                        type="file"
+                        type="text"
                         id="imagem"
                         name="imagem"
-                        accept="image/*"
+                        placeholder="https://..."
+                        value={formulario.imagem}
                         onChange={handleChange}
-                        required
                     />
-                    <span className="formulario-dica">Selecione uma imagem ou GIF do projeto</span>
+                    <span className="formulario-dica">Cole a URL de uma imagem ou GIF do projeto</span>
 
                     <div className="formulario-linha">
                         <div className="formulario-campo">
-                            <label htmlFor="demo">link demo *</label>
+                            <label htmlFor="demo">link demo</label>
                             <input
                                 type="text"
                                 id="demo"
@@ -131,7 +138,7 @@ export default function Formulario() {
                         </div>
                     </div>
 
-                    <label htmlFor="tecnologias">tecnologias *</label>
+                    <label htmlFor="tecnologias">tecnologias</label>
                     <input
                         type="text"
                         id="tecnologias"
@@ -139,7 +146,6 @@ export default function Formulario() {
                         placeholder="React, TypeScript, Node.js, PostgreSQL"
                         value={formulario.tecnologias}
                         onChange={handleChange}
-                        required
                     />
                     <span className="formulario-dica">Separe as tecnologias por vírgula</span>
 
@@ -155,8 +161,8 @@ export default function Formulario() {
                     </div>
 
                     <div className="formulario-acoes">
-                        <button type="submit" className="formulario-btn-adicionar">Adicionar Projeto</button>
-                        <Link to="/admin/editar" className="formulario-btn-cancelar">Cancelar</Link>
+                        <button type="submit" className="formulario-btn-adicionar">Salvar Alterações</button>
+                        <Link to="/admin/dashboard" className="formulario-btn-cancelar">Cancelar</Link>
                     </div>
                 </form>
             </main>

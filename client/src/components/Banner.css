@@ -1,11 +1,10 @@
 .banner {
   display: flex;
   align-items: center;
-  /* justify-content: ; */
   gap: 60px;
   padding: 100px 60px 80px;
-  margin: 100px
-}
+  margin: 100px;
+  }
 
 .banner-content {
   max-width: 520px;
