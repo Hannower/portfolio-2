@@ -9,10 +9,9 @@ const app = express();
 const porta = 3000;
 
 app.use(express.json())
-app.use(cors());
-// app.use(cors({
-//   origin: 'https://portfolio-2-bice-gamma-23.vercel.app'
-// }));
+app.use(cors({
+  origin: 'https://portfolio-2-bice-gamma-23.vercel.app'
+}));
 app.use('/projetos', projetosRoutes);
 
 app.get('/', (req, res) => {
