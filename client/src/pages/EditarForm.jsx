@@ -17,7 +17,7 @@ export default function EditarForm() {
     });
 
     useEffect(() => {
-        fetch(`http://localhost:3000/projetos/${id}`)
+        fetch(`${import.meta.env.VITE_API_URL}/projetos/${id}`)
             .then(res => res.json())
             .then(dados => {
                 setFormulario({

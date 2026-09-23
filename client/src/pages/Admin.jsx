@@ -6,7 +6,7 @@ export default function Admin() {
     const [projetos, setProjetos] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:3000/projetos')
+        fetch(fetch(`${import.meta.env.VITE_API_URL}/projetos`))
             .then(response => response.json())
             .then(dados => setProjetos(dados));
     }, [])
@@ -17,7 +17,7 @@ export default function Admin() {
         if (!confirmacao) return;
 
         try {
-            await fetch(`http://localhost:3000/projetos/${id}`, {
+            await fetch(`${import.meta.env.VITE_API_URL}/projetos/${id}`, {
                 method: 'DELETE',
             });
 
