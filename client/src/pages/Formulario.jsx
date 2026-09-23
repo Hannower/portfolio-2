@@ -38,7 +38,7 @@ export default function Formulario() {
         dadosParaEnviar.append('destaque', formulario.destaque);
 
         try {
-            const res = await fetch('http://localhost:3000/projetos', {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/projetos`, {
                 method: 'POST',
                 body: dadosParaEnviar,
             });

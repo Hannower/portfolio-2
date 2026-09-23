@@ -7,10 +7,14 @@ import cors from 'cors';
 
 const app = express();
 const porta = 3000;
+const origensPermitidas = [
+  'http://localhost:5173',
+  'https://portfolio-2-bice-gamma-23.vercel.app'
+];
 
 app.use(express.json())
 app.use(cors({
-  origin: 'https://portfolio-2-bice-gamma-23.vercel.app'
+  origin: origensPermitidas
 }));
 app.use('/projetos', projetosRoutes);
 
