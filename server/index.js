@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import projetosRoutes from './routes/projetos.js';
 import Projeto from './models/Projeto.js';
 import cors from 'cors';
+import authRoutes from './routes/auth.js';
 
 const app = express();
 const porta = 3000;
@@ -13,9 +14,12 @@ const origensPermitidas = [
 ];
 
 app.use(express.json())
+
 app.use(cors({
   origin: origensPermitidas
 }));
+
+app.use('/auth', authRoutes);
 app.use('/projetos', projetosRoutes);
 
 app.get('/', (req, res) => {

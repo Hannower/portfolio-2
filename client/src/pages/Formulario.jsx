@@ -40,6 +40,9 @@ export default function Formulario() {
         try {
             const res = await fetch(`${import.meta.env.VITE_API_URL}/projetos`, {
                 method: 'POST',
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                },
                 body: dadosParaEnviar,
             });
 
@@ -53,6 +56,11 @@ export default function Formulario() {
         }
     };
 
+    const handleSair = () => {
+        localStorage.removeItem('token');
+        navigate('/admin');
+    };
+
     return (
         <div className="formulario-page">
             <header className="formulario-header">
@@ -63,8 +71,8 @@ export default function Formulario() {
                 </div>
 
                 <div className="formulario-header-acoes">
-                    <Link to="/admin/dashboard" className="formulario-voltar-lista">← Lista</Link>
-                    <button className="formulario-btn-sair">sair</button>
+                    <Link to="/admin/dashboard" className="formulario-btn-cancelar">Cancelar</Link>
+                    <button className="formulario-btn-sair" onClick={handleSair}>sair</button>
                 </div>
             </header>
 

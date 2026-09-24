@@ -46,9 +46,12 @@ export default function EditarForm() {
         }
 
         try {
-            const res = await fetch(`http://localhost:3000/projetos/${id}`, {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/projetos/${id}`, {
                 method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                },
                 body: JSON.stringify(dadosPreenchidos),
             });
 
@@ -62,6 +65,11 @@ export default function EditarForm() {
         }
     };
 
+    const handleSair = () => {
+        localStorage.removeItem('token');
+        navigate('/admin');
+    };
+
     return (
         <div className="formulario-page">
             <header className="formulario-header">
@@ -73,7 +81,7 @@ export default function EditarForm() {
 
                 <div className="formulario-header-acoes">
                     <Link to="/admin/dashboard" className="formulario-voltar-lista">← Lista</Link>
-                    <button className="formulario-btn-sair">sair</button>
+                    <button className="formulario-btn-sair" onClick={handleSair}>sair</button>
                 </div>
             </header>
 
