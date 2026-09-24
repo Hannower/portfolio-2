@@ -6,7 +6,7 @@ const ferramentas = ['todos', 'React', 'JavaScript', 'Node.js', 'Express', 'REST
 
 export default function Projetos() {
     const [projetos, setProjetos] = useState([]);
-    
+
     useEffect(() => {
         fetch(`${import.meta.env.VITE_API_URL}/projetos`)
             .then(res => res.json())
@@ -24,7 +24,7 @@ export default function Projetos() {
             <span className="projetos-tagline">// projetos</span>
             <div className="projetos-header">
                 <div className="projetos-title">
-                    <h2 >O que eu construí</h2>  
+                    <h2 >O que eu construí</h2>
                 </div>
                 <div className="projetos-count">
                     <span >{projetosFiltrados.length} projetos</span>
@@ -59,8 +59,8 @@ export default function Projetos() {
                                 ))}
                             </div>
                             <div className="projeto-links">
-                                <a href={p.linkDemo} className="link-demo">Ver demo →</a>
-                                <a href={p.repositorio} className="link-github">GitHub</a>
+                                <a href={p.linkDemo} className="link-demo" target="_blank">Ver demo →</a>
+                                <a href={p.repositorio} className="link-github" target="_blank">GitHub</a>
                             </div>
                         </div>
                     </div>
