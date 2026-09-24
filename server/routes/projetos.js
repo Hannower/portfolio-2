@@ -24,8 +24,16 @@ router.get('/', async (req, res) => {
 
 router.post('/', upload.single('imagem'), async (req, res) => {
     try {
+        const tecnologias = req.body.tecnologias
+            ? req.body.tecnologias
+                .split(',')
+                .map((t) => t.trim())
+                .filter((t) => t !== '')
+            : [];
+
         const novoProjeto = await Projeto.create({
             ...req.body,
+            tecnologias,
             imagem: req.file.path,
         });
         res.status(201).json(novoProjeto);
