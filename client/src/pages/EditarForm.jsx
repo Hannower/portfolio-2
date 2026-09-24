@@ -16,6 +16,10 @@ export default function EditarForm() {
         destaque: false,
     });
 
+    const [novaImagem, setNovaImagem] = useState(null);
+    const [fotosExistentes, setFotosExistentes] = useState([]);
+    const [novasFotos, setNovasFotos] = useState([]);
+
     useEffect(() => {
         fetch(`${import.meta.env.VITE_API_URL}/projetos/${id}`)
             .then(res => res.json())
@@ -24,6 +28,7 @@ export default function EditarForm() {
                     ...dados,
                     tecnologias: dados.tecnologias.join(', '),
                 });
+                setFotosExistentes(dados.galeria || []);
             });
     }, [id]);
 
@@ -32,27 +37,50 @@ export default function EditarForm() {
         setFormulario({ ...formulario, [name]: value });
     };
 
+    const handleNovaImagem = (e) => {
+        setNovaImagem(e.target.files[0]);
+    };
+
+    const handleNovasFotos = (e) => {
+        setNovasFotos([...novasFotos, ...Array.from(e.target.files)]);
+    };
+
+    const removerFotoExistente = (url) => {
+        setFotosExistentes(fotosExistentes.filter((foto) => foto !== url));
+    };
+
+    const removerNovaFoto = (indice) => {
+        setNovasFotos(novasFotos.filter((_, i) => i !== indice));
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const dadosPreenchidos = Object.fromEntries(
-            Object.entries(formulario).filter(([chave, valor]) => valor !== '')
-        );
+        const dadosParaEnviar = new FormData();
 
-        if (dadosPreenchidos.tecnologias) {
-            dadosPreenchidos.tecnologias = dadosPreenchidos.tecnologias
-                .split(',')
-                .map(t => t.trim());
+        dadosParaEnviar.append('titulo', formulario.titulo);
+        dadosParaEnviar.append('descricao', formulario.descricao);
+        dadosParaEnviar.append('linkDemo', formulario.linkDemo);
+        dadosParaEnviar.append('repositorio', formulario.repositorio);
+        dadosParaEnviar.append('tecnologias', formulario.tecnologias);
+        dadosParaEnviar.append('destaque', formulario.destaque);
+        dadosParaEnviar.append('galeriaExistente', JSON.stringify(fotosExistentes));
+
+        if (novaImagem) {
+            dadosParaEnviar.append('imagem', novaImagem);
         }
+
+        novasFotos.forEach((arquivo) => {
+            dadosParaEnviar.append('galeria', arquivo);
+        });
 
         try {
             const res = await fetch(`${import.meta.env.VITE_API_URL}/projetos/${id}`, {
                 method: 'PUT',
                 headers: {
-                    'Content-Type': 'application/json',
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
                 },
-                body: JSON.stringify(dadosPreenchidos),
+                body: dadosParaEnviar,
             });
 
             if (res.ok) {
@@ -109,17 +137,19 @@ export default function EditarForm() {
                         onChange={handleChange}
                     />
 
-                   <label htmlFor="imagem">imagem de capa *</label>
+                    <label>imagem de capa atual</label>
+                    <img src={formulario.imagem} alt="Capa atual" className="editar-preview-capa" />
+
+                    <label htmlFor="imagem">trocar imagem de capa</label>
                     <input
                         type="file"
                         id="imagem"
                         name="imagem"
                         accept="image/*"
-                        onChange={handleChange}
-                        required
+                        onChange={handleNovaImagem}
                     />
-                    <span className="formulario-dica">Cole a URL de uma imagem ou GIF do projeto</span>
-
+                    <span className="formulario-dica">Deixe em branco para manter a imagem atual</span>
+                    
                     <div className="formulario-linha">
                         <div className="formulario-campo">
                             <label htmlFor="demo">link demo</label>
@@ -156,6 +186,51 @@ export default function EditarForm() {
                         onChange={handleChange}
                     />
                     <span className="formulario-dica">Separe as tecnologias por vírgula</span>
+
+                    <label>outras telas</label>
+                    {fotosExistentes.length > 0 && (
+                        <div className="editar-galeria-grid">
+                            {fotosExistentes.map((url) => (
+                                <div key={url} className="editar-galeria-item">
+                                    <img src={url} alt="Foto da galeria" />
+                                    <button
+                                        type="button"
+                                        className="editar-galeria-remover"
+                                        onClick={() => removerFotoExistente(url)}
+                                    >
+                                        ✕
+                                    </button>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+
+                    {novasFotos.length > 0 && (
+                        <div className="editar-galeria-grid">
+                            {novasFotos.map((arquivo, indice) => (
+                                <div key={indice} className="editar-galeria-item editar-galeria-item-nova">
+                                    <img src={URL.createObjectURL(arquivo)} alt="Nova foto" />
+                                    <button
+                                        type="button"
+                                        className="editar-galeria-remover"
+                                        onClick={() => removerNovaFoto(indice)}
+                                    >
+                                        ✕
+                                    </button>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+
+                    <input
+                        type="file"
+                        id="galeria"
+                        name="galeria"
+                        accept="image/*"
+                        multiple
+                        onChange={handleNovasFotos}
+                    />
+                    <span className="formulario-dica">Adicione novas fotos ou remova as existentes clicando no ✕</span>
 
                     <div className="formulario-toggle">
                         <button
