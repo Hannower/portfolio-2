@@ -6,7 +6,7 @@ export default function Admin() {
     const [projetos, setProjetos] = useState([]);
 
     useEffect(() => {
-        fetch(fetch(`${import.meta.env.VITE_API_URL}/projetos`))
+        fetch(`${import.meta.env.VITE_API_URL}/projetos`)
             .then(response => response.json())
             .then(dados => setProjetos(dados));
     }, [])
