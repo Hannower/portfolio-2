@@ -5,13 +5,14 @@
 }
 
 :root {
-  --color-bg: #0a0e17;
-  --color-bg-alt: #1a1f2e;
-  --color-border: #1f2430;
-  --color-text: #5b5e66;
+  --color-bg: #0c0a07;
+  --color-bg-alt: #1a1611;
+  --color-border: #2a241a;
+  --color-text: #8a8578;
   --color-text-strong: #ffffff;
-  --color-primary: #6c7cff;
-  --color-primary-alt: #a855f7;
+  --color-primary: #e6b325;
+  --color-primary-alt: #c98a1b;
+  --color-primary-rgb: 230, 179, 37;
 
   --font-base: 'Inter', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
