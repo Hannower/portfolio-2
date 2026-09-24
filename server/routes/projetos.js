@@ -1,6 +1,7 @@
 import express from 'express';
 import Projeto from '../models/Projeto.js';
 import upload from '../middleware/upload.js';
+import auth from '../middleware/auth.js';
 
 const router = express.Router();
 
@@ -13,16 +14,19 @@ router.get('/', async (req, res) => {
     }
 })
 
-// router.get('/:id', async (req, res) => {
-//     try {
-//         const dados = await Projeto.findById(req.params.id);
-//         res.json(dados);
-//     } catch (erro) {
-//         res.status(500).json({ mensagem: 'Erro ao buscar projeto', erro});
-//     }
-// })
+router.get('/:id', async (req, res) => {
+    try {
+        const projeto = await Projeto.findById(req.params.id);
+        if (!projeto) {
+            return res.status(404).json({ mensagem: 'Projeto não encontrado' });
+        }
+        res.json(projeto);
+    } catch (erro) {
+        res.status(500).json({ mensagem: 'Erro ao buscar projeto', erro });
+    }
+})
 
-router.post('/', upload.single('imagem'), async (req, res) => {
+router.post('/', auth, upload.single('imagem'), async (req, res) => {
     try {
         const tecnologias = req.body.tecnologias
             ? req.body.tecnologias
@@ -42,7 +46,7 @@ router.post('/', upload.single('imagem'), async (req, res) => {
     }
 })
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', auth , async (req, res) => {
     try {
         const projetoAtualizado = await Projeto.findByIdAndUpdate(req.params.id, req.body, { new: true });
         res.json(projetoAtualizado);
@@ -51,7 +55,7 @@ router.put('/:id', async (req, res) => {
     }
 })
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', auth , async (req, res) => {
     try {
         const projetoDeletado = await Projeto.findByIdAndDelete(req.params.id);
         res.json(projetoDeletado);

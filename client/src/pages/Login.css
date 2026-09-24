@@ -83,3 +83,9 @@
 .login-card button:hover {
     box-shadow: 0 0 20px var(--color-primary);
 }
+
+.login-erro {
+  color: #ff6b6b;
+  font-size: 0.85rem;
+  margin-bottom: 12px;
+}

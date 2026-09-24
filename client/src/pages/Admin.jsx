@@ -1,8 +1,10 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import './Admin.css';
 
+
 export default function Admin() {
+    const navigate = useNavigate();
     const [projetos, setProjetos] = useState([]);
 
     useEffect(() => {
@@ -17,15 +19,27 @@ export default function Admin() {
         if (!confirmacao) return;
 
         try {
-            await fetch(`${import.meta.env.VITE_API_URL}/projetos/${id}`, {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/projetos/${id}`, {
                 method: 'DELETE',
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                },
             });
 
-            setProjetos(projetos.filter((p) => p._id !== id));
+            if (!res.ok) {
+                alert('Erro ao excluir projeto');
+                return;
+            }
 
+            setProjetos(projetos.filter((p) => p._id !== id));
         } catch (erro) {
             alert('Erro ao excluir projeto');
         }
+    };
+
+    const handleSair = () => {
+        localStorage.removeItem('token');
+        navigate('/admin');
     };
 
     return (
@@ -39,7 +53,7 @@ export default function Admin() {
 
                 <div className="admin-header-acoes">
                     <Link to="/admin/novo" className="admin-btn-novo">+ Novo Projeto</Link>
-                    <button className="admin-btn-sair">sair</button>
+                    <button className="admin-btn-sair" onClick={handleSair}>sair</button>
                 </div>
             </header>
 
