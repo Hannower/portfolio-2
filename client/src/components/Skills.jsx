@@ -7,7 +7,7 @@ const tags = [
   { name: 'Express', color: '#ffffff' },
   { name: 'REST API', color: '#a855f7' },
   { name: 'Git', color: '#f05033' },
-  { name: 'PostgreSQL', color: '#336791' },
+  { name: 'MongoDB', color: '#336791' },
   { name: 'Firebase', color: '#ffa611' },
 ];
 

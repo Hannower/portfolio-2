@@ -71,7 +71,7 @@ export default function Formulario() {
                 </div>
 
                 <div className="formulario-header-acoes">
-                    <Link to="/admin/dashboard" className="formulario-btn-cancelar">Cancelar</Link>
+                    <Link to="/admin/dashboard" className="formulario-voltar-lista">← Lista</Link>
                     <button className="formulario-btn-sair" onClick={handleSair}>sair</button>
                 </div>
             </header>
@@ -164,7 +164,7 @@ export default function Formulario() {
 
                     <div className="formulario-acoes">
                         <button type="submit" className="formulario-btn-adicionar">Adicionar Projeto</button>
-                        <Link to="/admin/editar" className="formulario-btn-cancelar">Cancelar</Link>
+                        <Link to="/admin/dashboard" className="formulario-btn-cancelar">Cancelar</Link>
                     </div>
                 </form>
             </main>

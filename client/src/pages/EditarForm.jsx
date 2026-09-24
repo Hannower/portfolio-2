@@ -109,14 +109,14 @@ export default function EditarForm() {
                         onChange={handleChange}
                     />
 
-                    <label htmlFor="imagem">url da imagem / gif</label>
+                   <label htmlFor="imagem">imagem de capa *</label>
                     <input
-                        type="text"
+                        type="file"
                         id="imagem"
                         name="imagem"
-                        placeholder="https://..."
-                        value={formulario.imagem}
+                        accept="image/*"
                         onChange={handleChange}
+                        required
                     />
                     <span className="formulario-dica">Cole a URL de uma imagem ou GIF do projeto</span>
 
