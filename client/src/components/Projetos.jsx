@@ -1,9 +1,6 @@
 import { useState, useEffect } from "react";
 import './Projetos.css';
 
-const ferramentas = ['todos', 'React', 'JavaScript', 'Node.js', 'Express', 'REST API', 'Git', 'PostgreeSQL', 'Firebase'];
-
-
 export default function Projetos() {
     const [projetos, setProjetos] = useState([]);
 
@@ -12,6 +9,10 @@ export default function Projetos() {
             .then(res => res.json())
             .then(dados => setProjetos(dados));
     }, [])
+
+    const ferramentas = [
+        ...new Set(projetos.flatMap((p) => p.tecnologias || []))
+    ].sort();
 
     const [filtro, setFiltro] = useState('todos');
 
@@ -31,17 +32,19 @@ export default function Projetos() {
                 </div>
             </div>
 
-            <div className="projetos-filtros">
-                {ferramentas.map((f) => (
-                    <button
-                        key={f}
-                        className={`projetos-filtro ${filtro === f ? 'ativo' : ''}`}
-                        onClick={() => setFiltro(f)}
-                    >
-                        {f}
-                    </button>
-                ))}
-            </div>
+            {ferramentas.length > 0 && (
+                <div className="projetos-filtros">
+                    {['todos', ...ferramentas].map((f) => (
+                        <button
+                            key={f}
+                            className={`projetos-filtro ${filtro === f ? 'ativo' : ''}`}
+                            onClick={() => setFiltro(f)}
+                        >
+                            {f}
+                        </button>
+                    ))}
+                </div>
+            )}
 
             <div className="projetos-grid">
                 {projetosFiltrados.map((p) => (
