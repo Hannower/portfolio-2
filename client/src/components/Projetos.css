@@ -91,6 +91,31 @@
   transform: scale(1.1);
 }
 
+.projeto-imagem {
+  position: relative;
+  height: 180px;
+}
+
+.projeto-ver-fotos {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  padding: 5px 12px;
+  background-color: rgba(var(--color-primary-rgb), 0.85);
+  border: none;
+  border-radius: 6px;
+  color: var(--color-bg);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.projeto-imagem:hover .projeto-ver-fotos {
+  opacity: 1;
+}
+
 .projeto-destaque {
   position: absolute;
   top: 10px;

@@ -26,34 +26,82 @@ router.get('/:id', async (req, res) => {
     }
 })
 
-router.post('/', auth, upload.single('imagem'), async (req, res) => {
-    try {
-        const tecnologias = req.body.tecnologias
-            ? req.body.tecnologias
-                .split(',')
-                .map((t) => t.trim())
-                .filter((t) => t !== '')
-            : [];
+router.post(
+    '/',
+    auth,
+    upload.fields([
+        { name: 'imagem', maxCount: 1 },
+        { name: 'galeria', maxCount: 6 },
+    ]),
+    async (req, res) => {
+        try {
+            const tecnologias = req.body.tecnologias
+                ? req.body.tecnologias
+                    .split(',')
+                    .map((t) => t.trim())
+                    .filter((t) => t !== '')
+                : [];
 
-        const novoProjeto = await Projeto.create({
-            ...req.body,
-            tecnologias,
-            imagem: req.file.path,
-        });
-        res.status(201).json(novoProjeto);
-    } catch (erro) {
-        res.status(400).json({ mensagem: 'Erro ao criar projeto', erro });
-    }
-})
+            const galeria = req.files.galeria
+                ? req.files.galeria.map((arquivo) => arquivo.path)
+                : [];
 
-router.put('/:id', auth , async (req, res) => {
-    try {
-        const projetoAtualizado = await Projeto.findByIdAndUpdate(req.params.id, req.body, { new: true });
-        res.json(projetoAtualizado);
-    } catch (erro) {
-        res.status(400).json({ mensagem: 'Erro ao atualizar projeto', erro });
+            const novoProjeto = await Projeto.create({
+                ...req.body,
+                tecnologias,
+                galeria,
+                imagem: req.files.imagem[0].path,
+            });
+            res.status(201).json(novoProjeto);
+        } catch (erro) {
+            res.status(400).json({ mensagem: 'Erro ao criar projeto', erro });
+        }
     }
-})
+)
+
+router.put(
+    '/:id',
+    auth,
+    upload.fields([
+        { name: 'imagem', maxCount: 1 },
+        { name: 'galeria', maxCount: 6 },
+    ]),
+    async (req, res) => {
+        try {
+            const dadosAtualizados = { ...req.body };
+
+            if (dadosAtualizados.tecnologias) {
+                dadosAtualizados.tecnologias = dadosAtualizados.tecnologias
+                    .split(',')
+                    .map((t) => t.trim())
+                    .filter((t) => t !== '');
+            }
+
+            if (req.files?.imagem) {
+                dadosAtualizados.imagem = req.files.imagem[0].path;
+            }
+
+            const galeriaExistente = req.body.galeriaExistente
+                ? JSON.parse(req.body.galeriaExistente)
+                : [];
+            const novasFotos = req.files?.galeria
+                ? req.files.galeria.map((arquivo) => arquivo.path)
+                : [];
+
+            dadosAtualizados.galeria = [...galeriaExistente, ...novasFotos];
+            delete dadosAtualizados.galeriaExistente;
+
+            const projetoAtualizado = await Projeto.findByIdAndUpdate(
+                req.params.id,
+                dadosAtualizados,
+                { new: true }
+            );
+            res.json(projetoAtualizado);
+        } catch (erro) {
+            res.status(400).json({ mensagem: 'Erro ao atualizar projeto', erro });
+        }
+    }
+)
 
 router.delete('/:id', auth , async (req, res) => {
     try {

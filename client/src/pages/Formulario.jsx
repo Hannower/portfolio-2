@@ -9,6 +9,7 @@ export default function Formulario() {
         titulo: '',
         descricao: '',
         imagem: '',
+        galeria: [],
         linkDemo: '',
         repositorio: '',
         tecnologias: '',
@@ -16,11 +17,13 @@ export default function Formulario() {
     })
 
     const handleChange = (e) => {
-        const { name, type, value, files } = e.target;
+        const { name, type, value, files, multiple } = e.target;
 
         setFormulario({
             ...formulario,
-            [name]: type === 'file' ? files[0] : value
+            [name]: type === 'file'
+                ? (multiple ? Array.from(files) : files[0])
+                : value
         });
     };
 
@@ -32,6 +35,9 @@ export default function Formulario() {
         dadosParaEnviar.append('titulo', formulario.titulo);
         dadosParaEnviar.append('descricao', formulario.descricao);
         dadosParaEnviar.append('imagem', formulario.imagem);
+        formulario.galeria.forEach((arquivo) => {
+            dadosParaEnviar.append('galeria', arquivo);
+        });
         dadosParaEnviar.append('linkDemo', formulario.linkDemo);
         dadosParaEnviar.append('repositorio', formulario.repositorio);
         dadosParaEnviar.append('tecnologias', formulario.tecnologias);
@@ -112,6 +118,17 @@ export default function Formulario() {
                         required
                     />
                     <span className="formulario-dica">Selecione uma imagem ou GIF do projeto</span>
+
+                    <label htmlFor="galeria">outras telas (opcional)</label>
+                    <input
+                        type="file"
+                        id="galeria"
+                        name="galeria"
+                        accept="image/*"
+                        multiple
+                        onChange={handleChange}
+                    />
+                    <span className="formulario-dica">Selecione até 6 imagens adicionais (Ctrl ou Shift para múltiplas)</span>
 
                     <div className="formulario-linha">
                         <div className="formulario-campo">

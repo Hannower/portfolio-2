@@ -1,0 +1,97 @@
+.galeria-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(12, 10, 7, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 20px;
+}
+
+.galeria-conteudo {
+  position: relative;
+  max-width: 900px;
+  width: 100%;
+}
+
+.galeria-fechar {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  background: none;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-strong);
+  font-size: 1.1rem;
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: border-color 0.3s ease, color 0.3s ease;
+}
+
+.galeria-fechar:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.galeria-imagem-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-bg-alt);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.galeria-imagem-container img {
+  width: 100%;
+  max-height: 70vh;
+  object-fit: contain;
+}
+
+.galeria-seta {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(var(--color-primary-rgb), 0.15);
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary);
+  font-size: 1.5rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.galeria-seta:hover {
+  background-color: var(--color-primary);
+  color: var(--color-bg);
+}
+
+.galeria-seta-esquerda { left: 16px; }
+.galeria-seta-direita { right: 16px; }
+
+.galeria-pontos {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.galeria-ponto {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background-color: var(--color-border);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.galeria-ponto.ativo {
+  background-color: var(--color-primary);
+}

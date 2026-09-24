@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
+import GaleriaModal from "./GaleriaModal";
 import './Projetos.css';
 
 export default function Projetos() {
     const [projetos, setProjetos] = useState([]);
+    const [projetoAberto, setProjetoAberto] = useState(null);
 
     useEffect(() => {
         fetch(`${import.meta.env.VITE_API_URL}/projetos`)
@@ -45,13 +47,27 @@ export default function Projetos() {
                     ))}
                 </div>
             )}
-
+            {projetoAberto && (
+                <GaleriaModal
+                    imagens={[projetoAberto.imagem, ...projetoAberto.galeria]}
+                    tituloProjeto={projetoAberto.titulo}
+                    onClose={() => setProjetoAberto(null)}
+                />
+            )}
             <div className="projetos-grid">
                 {projetosFiltrados.map((p) => (
                     <div key={p._id} className="projeto-card">
                         <div className="projeto-imagem">
                             {p.destaque && <span className="projeto-destaque">destaque</span>}
                             <img src={p.imagem} alt={p.titulo} />
+                            {p.galeria?.length > 0 && (
+                                <button
+                                    className="projeto-ver-fotos"
+                                    onClick={() => setProjetoAberto(p)}
+                                >
+                                    Ver mais telas
+                                </button>
+                            )}
                         </div>
                         <div className="projeto-info">
                             <h3>{p.titulo}</h3>
