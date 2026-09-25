@@ -187,6 +187,28 @@
   text-decoration: none;
 }
 
+.projetos-status {
+  text-align: center;
+  padding: 40px 0;
+  color: var(--color-text);
+}
+
+.projetos-tentar-novamente {
+  margin-top: 12px;
+  padding: 8px 20px;
+  background-color: rgba(var(--color-primary-rgb), 0.15);
+  border: 1px solid var(--color-primary);
+  border-radius: 6px;
+  color: var(--color-primary);
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.projetos-tentar-novamente:hover {
+  background-color: var(--color-primary);
+  color: var(--color-bg);
+}
+
 @media (max-width: 768px) {
   .projetos {
     padding: 60px 24px;
