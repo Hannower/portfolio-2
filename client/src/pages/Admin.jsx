@@ -2,20 +2,32 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import './Admin.css';
 
-
 export default function Admin() {
-    const navigate = useNavigate();
     const [projetos, setProjetos] = useState([]);
+    const [carregando, setCarregando] = useState(true);
+    const [erro, setErro] = useState(false);
+    const navigate = useNavigate();
+
+    const buscarProjetos = () => {
+        setCarregando(true);
+        setErro(false);
+
+        fetch(`${import.meta.env.VITE_API_URL}/projetos`)
+            .then(res => {
+                if (!res.ok) throw new Error('Erro na resposta da API');
+                return res.json();
+            })
+            .then(dados => setProjetos(dados))
+            .catch(() => setErro(true))
+            .finally(() => setCarregando(false));
+    };
 
     useEffect(() => {
-        fetch(`${import.meta.env.VITE_API_URL}/projetos`)
-            .then(response => response.json())
-            .then(dados => setProjetos(dados));
-    }, [])
+        buscarProjetos();
+    }, []);
 
     const handleExcluir = async (id) => {
         const confirmacao = confirm('Confirma exclusão do projeto?');
-
         if (!confirmacao) return;
 
         try {
@@ -62,31 +74,46 @@ export default function Admin() {
                 <h1>Seus Projetos</h1>
                 <p className="admin-subtitulo">{projetos.length} projetos cadastrados</p>
 
-                <div className="admin-lista">
-                    {projetos.map((p) => (
-                        <div key={p._id} className="admin-card">
-                            <img src={p.imagem} alt={p.titulo} className="admin-card-imagem" />
+                {carregando && (
+                    <p className="admin-status">Carregando projetos...</p>
+                )}
 
-                            <div className="admin-card-info">
-                                <div className="admin-card-titulo">
-                                    <h3>{p.titulo}</h3>
-                                    {p.destaque && <span className="admin-card-destaque">destaque</span>}
+                {!carregando && erro && (
+                    <div className="admin-status">
+                        <p>Não foi possível carregar os projetos.</p>
+                        <button className="admin-tentar-novamente" onClick={buscarProjetos}>
+                            Tentar novamente
+                        </button>
+                    </div>
+                )}
+
+                {!carregando && !erro && (
+                    <div className="admin-lista">
+                        {projetos.map((p) => (
+                            <div key={p._id} className="admin-card">
+                                <img src={p.imagem} alt={p.titulo} className="admin-card-imagem" />
+
+                                <div className="admin-card-info">
+                                    <div className="admin-card-titulo">
+                                        <h3>{p.titulo}</h3>
+                                        {p.destaque && <span className="admin-card-destaque">destaque</span>}
+                                    </div>
+                                    <p>{p.descricao}</p>
+                                    <div className="admin-card-tags">
+                                        {p.tecnologias.map((tag) => (
+                                            <span key={tag} className="admin-card-tag">{tag}</span>
+                                        ))}
+                                    </div>
                                 </div>
-                                <p>{p.descricao}</p>
-                                <div className="admin-card-tags">
-                                    {p.tecnologias.map((tag) => (
-                                        <span key={tag} className="admin-card-tag">{tag}</span>
-                                    ))}
+
+                                <div className="admin-card-acoes">
+                                    <Link to={`/admin/editar/${p._id}`} className="admin-btn-editar">Editar</Link>
+                                    <button className="admin-btn-excluir" onClick={() => handleExcluir(p._id)}>Excluir</button>
                                 </div>
                             </div>
-
-                            <div className="admin-card-acoes">
-                                <Link to={`/admin/editar/${p._id}`} className="admin-btn-editar">Editar</Link>
-                                <button className="admin-btn-excluir" onClick={() => handleExcluir(p._id)}>Excluir</button>
-                            </div>
-                        </div>
-                    ))}
-                </div>
+                        ))}
+                    </div>
+                )}
             </main>
         </div>
     );
